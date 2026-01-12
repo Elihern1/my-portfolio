@@ -1,3 +1,5 @@
+"use client";
+
 import { useLang } from "@/components/LanguageProvider";
 
 export default function Footer() {

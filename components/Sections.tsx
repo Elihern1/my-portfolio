@@ -1,3 +1,5 @@
+"use client";
+
 import ProjectCard from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
 import { useLang } from "@/components/LanguageProvider";
@@ -86,7 +88,7 @@ export default function Sections() {
 
         <div className="mt-10 space-y-6">
           {projects.map((p) => (
-            <ProjectCard key={p.title} {...p} />
+            <ProjectCard key={p.en.title} {...p} />
           ))}
         </div>
       </section>

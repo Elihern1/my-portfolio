@@ -1,34 +1,46 @@
+"use client";
+
 import Image from "next/image";
+import { useLang } from "@/components/LanguageProvider";
 
 type Project = {
-  title: string;
-  short: string;
-  description: string;
+  en: {
+    title: string;
+    short: string;
+    description: string;
+    highlights: string[];
+  };
+  fr: {
+    title: string;
+    short: string;
+    description: string;
+    highlights: string[];
+  };
   tech: string[];
   github: string;
   demo?: string;
   images?: string[];
-  highlights?: string[];
 };
 
 export default function ProjectCard({
-  title,
-  short,
-  description,
+  en,
+  fr,
   tech,
   github,
   demo,
   images = [],
-  highlights = [],
 }: Project) {
+  const { lang } = useLang();
+  const content = lang === "fr" ? fr : en;
+
   const cover = images[0];
+  const highlights = content.highlights ?? [];
 
   return (
     <article
       className="
         group overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm
-        transition duration-200
-        hover:-translate-y-0.5 hover:shadow-md
+        transition duration-200 hover:-translate-y-0.5 hover:shadow-md
       "
     >
       <div className="grid gap-0 md:grid-cols-[420px_1fr]">
@@ -38,20 +50,16 @@ export default function ProjectCard({
             <div className="relative h-56 w-full md:h-full">
               <Image
                 src={cover}
-                alt={`${title} screenshot`}
+                alt={`${content.title} screenshot`}
                 fill
                 sizes="(max-width: 768px) 100vw, 420px"
-                className="
-                  object-contain p-4
-                  transition duration-200
-                  group-hover:scale-[1.02]
-                "
+                className="object-contain p-4 transition duration-200 group-hover:scale-[1.02]"
                 priority={false}
               />
             </div>
           ) : (
             <div className="flex h-56 w-full items-center justify-center text-sm text-slate-500 md:h-full">
-              No image available
+              {lang === "fr" ? "Aucune image" : "No image available"}
             </div>
           )}
         </div>
@@ -59,11 +67,11 @@ export default function ProjectCard({
         {/* Content */}
         <div className="p-6">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h3 className="text-xl font-bold text-slate-900">{title}</h3>
-            <span className="text-sm text-slate-600">{short}</span>
+            <h3 className="text-xl font-bold text-slate-900">{content.title}</h3>
+            <span className="text-sm text-slate-600">{content.short}</span>
           </div>
 
-          <p className="mt-3 text-slate-700 leading-relaxed">{description}</p>
+          <p className="mt-3 text-slate-700 leading-relaxed">{content.description}</p>
 
           {/* Tech pills */}
           <div className="mt-4 flex flex-wrap gap-2">
@@ -93,11 +101,7 @@ export default function ProjectCard({
                 href={github}
                 target="_blank"
                 rel="noreferrer"
-                className="
-                  inline-flex items-center justify-center rounded-md
-                  bg-blue-500 px-4 py-2 text-sm font-bold text-white
-                  transition hover:bg-blue-400
-                "
+                className="inline-flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-400"
               >
                 GitHub
               </a>
@@ -108,13 +112,9 @@ export default function ProjectCard({
                 href={demo}
                 target="_blank"
                 rel="noreferrer"
-                className="
-                  inline-flex items-center justify-center rounded-md
-                  border border-blue-200 bg-white px-4 py-2 text-sm font-bold text-blue-600
-                  transition hover:bg-blue-50
-                "
+                className="inline-flex items-center justify-center rounded-md border border-blue-200 bg-white px-4 py-2 text-sm font-bold text-blue-600 transition hover:bg-blue-50"
               >
-                Live Demo
+                {lang === "fr" ? "Démo" : "Live Demo"}
               </a>
             )}
           </div>
