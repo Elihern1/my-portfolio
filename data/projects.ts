@@ -93,6 +93,6 @@ export const projects = [
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Responsive Design"],
     github: "",
     demo: "",
-    images: ["/projects/portfolio-1.png"],
+    images: ["/projects/portfolio-2.png"],
   },
 ];
