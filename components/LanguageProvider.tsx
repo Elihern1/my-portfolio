@@ -4,10 +4,11 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Lang } from "@/lib/i18n";
 import { i18n } from "@/lib/i18n";
 
+type Translations = typeof i18n.en; 
 type LangContextValue = {
   lang: Lang;
   setLang: (l: Lang) => void;
-  t: (typeof i18n)["en"];
+  t: Translations;
 };
 
 const LangContext = createContext<LangContextValue | null>(null);
@@ -17,16 +18,22 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("lang");
-    if (saved === "en" || saved === "fr") setLangState(saved);
+    if (saved === "en" || saved === "fr") {
+      setLangState(saved);
+      document.documentElement.lang = saved;
+    } else {
+      document.documentElement.lang = "en";
+    }
   }, []);
 
   const setLang = (l: Lang) => {
     setLangState(l);
     localStorage.setItem("lang", l);
+    document.documentElement.lang = l;
   };
 
-  const value = useMemo(
-    () => ({ lang, setLang, t: i18n[lang] }),
+  const value = useMemo<LangContextValue>(
+    () => ({ lang, setLang, t: i18n[lang] as Translations }),
     [lang]
   );
 
