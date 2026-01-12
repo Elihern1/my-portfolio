@@ -1,4 +1,8 @@
+import { useLang } from "@/components/LanguageProvider";
+
 export default function Footer() {
+  const { t } = useLang();
+
   return (
     <footer className="border-t border-blue-100 bg-blue-50">
       <div className="mx-auto max-w-6xl px-6 py-8 text-center">
@@ -7,11 +11,11 @@ export default function Footer() {
         </p>
 
         <p className="mt-1 text-sm text-slate-700">
-          Montréal, Québec • Web Developer (AEC)
+          {t.footer.line1}
         </p>
 
         <p className="mt-5 text-xs text-slate-500">
-          © {new Date().getFullYear()} • Built with Next.js
+          © {new Date().getFullYear()} • {t.footer.line2}
         </p>
       </div>
     </footer>
