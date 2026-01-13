@@ -91,7 +91,7 @@ export const projects = [
       ],
     },
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Responsive Design"],
-    github: "",
+    github: "https://github.com/Elihern1/my-portfolio",
     demo: "",
     images: ["/projects/portfolio-2.png"],
   },
